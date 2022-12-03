@@ -9,7 +9,7 @@ def main():
     screen.bgcolor("black")
     screen.setup(850, 800)
     screen.title("Space Invaders")
-    screen.tracer(1)
+    screen.tracer(2, 0)
 
     global ship
     ship = Ship(position=(0, -350))
