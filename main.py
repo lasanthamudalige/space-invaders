@@ -2,6 +2,9 @@ from turtle import Screen
 from bullet import Bullet
 from ship import Ship
 from alien import Alien
+import random
+from time import sleep
+import threading
 
 
 def main():
@@ -9,17 +12,15 @@ def main():
     screen.bgcolor("black")
     screen.setup(850, 800)
     screen.title("Space Invaders")
-    screen.tracer(2, 0)
+    # screen.tracer(1, 1)
 
     global ship
     ship = Ship(position=(0, -350))
 
+    global aliens
     aliens = []
-    x_coordinates = [-200, -150, -100, -50, 0, 50, 100, 150, 200]
-    for x in x_coordinates:
-        location = (x, 350)
-        alien = Alien(position=location)
-        aliens.append(alien)
+
+    get_new_alien()
 
     global bullets
     bullets = []
@@ -34,22 +35,7 @@ def main():
     on = True
     while on:
         for alien in aliens:
-            # Move alien from left to right
-            if alien.direction == "left":
-                if alien.xcor() == -410:
-                    alien.direction = "right"
-                else:
-                    alien.move_left()
-            elif alien.direction == "right":
-                if alien.xcor() == 410:
-                    alien.direction = "down"
-                else:
-                    alien.move_right()
-            # Move alien 1 row down when alien reach right
-            elif alien.direction == "down":
-                new_y = alien.ycor() - 10
-                alien.goto(x=alien.xcor(), y=new_y)
-                alien.direction = "left"
+            alien.move()
 
         for bullet in bullets:
             if bullet.ycor() < 410:
@@ -63,6 +49,13 @@ def main():
 def shoot():
     bullet = Bullet(position=(ship.xcor(), ship.ycor()))
     bullets.append(bullet)
+
+
+def get_new_alien():
+    random_y = random.randint(-400, 400)
+    new_position = (random_y, 350)
+    alien = Alien(new_position)
+    aliens.append(alien)
 
 
 if __name__ == "__main__":
