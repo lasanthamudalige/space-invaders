@@ -14,10 +14,14 @@ def main():
     global ship
     ship = Ship(position=(0, -350))
 
-    global objects
-    objects = []
+    global aliens
+    aliens = []
 
-    get_new_alien()
+    for _ in range(10):
+        get_new_alien()
+
+    global bullets
+    bullets = []
 
     screen.listen()
     screen.onkey(ship.go_left, "a")
@@ -28,28 +32,32 @@ def main():
 
     on = True
     while on:
-        for object in objects:
-            if object.name == "alien":
-                object.move()
-            if object.name == "bullet":
-                if object.ycor() < 410:
-                    object.move()
-                else:
-                    objects.remove(object)
+        for alien in aliens:
+            for bullet in bullets:
+                if alien.distance(bullet) <= 25:
+                    aliens.remove(alien)
+            if alien.ycor() < 410:
+                alien.move()
+
+        for bullet in bullets:
+            if bullet.ycor() < 410:
+                bullet.move()
+            else:
+                bullets.remove(bullet)
 
     screen.exitonclick()
 
 
 def shoot():
     bullet = Bullet(position=(ship.xcor(), ship.ycor()))
-    objects.append(bullet)
+    bullets.append(bullet)
 
 
 def get_new_alien():
     random_y = random.randint(-400, 400)
     new_position = (random_y, 350)
     alien = Alien(new_position)
-    objects.append(alien)
+    aliens.append(alien)
 
 
 if __name__ == "__main__":
