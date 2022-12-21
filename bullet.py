@@ -8,6 +8,7 @@ class Bullet(Turtle):
         self.hideturtle()
         self.color("blue")
         self.shapesize(0.5, 0.5)
+        self.name = "bullet"
         self.penup()
         self.goto(position)
 
