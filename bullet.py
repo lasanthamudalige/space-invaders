@@ -4,10 +4,10 @@ from turtle import Turtle
 class Bullet(Turtle):
 
     def __init__(self, position):
-        super(Bullet, self).__init__(shape="circle")
+        super(Bullet, self).__init__(shape="square")
         self.hideturtle()
         self.color("blue")
-        self.shapesize(0.5, 0.5)
+        self.shapesize(1, 0.25)
         self.name = "bullet"
         self.penup()
         self.goto(position)
