@@ -38,16 +38,19 @@ def main():
         for alien in aliens:
             for bullet in bullets:
                 if alien.distance(bullet) <= 20:
+                    alien.hide()
                     aliens.remove(alien)
+                    bullet.hide()
                     bullets.remove(bullet)
-                if bullet != None:
+                if bullet != None and bullet.got_hit == False:
                     if bullet.ycor() < 410:
                         bullet.move()
                     else:
                         bullets.remove(bullet)
 
-            if alien.ycor() < 410:
-                alien.move()
+            if alien.got_hit == False:
+                if alien.ycor() < 410:
+                    alien.move()
 
     screen.exitonclick()
 
