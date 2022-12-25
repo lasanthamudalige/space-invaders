@@ -3,6 +3,7 @@ from bullet import Bullet
 from ship import Ship
 from alien import Alien
 import random
+from time import sleep
 
 
 def main():
@@ -14,12 +15,14 @@ def main():
     global ship
     ship = Ship(position=(0, -350))
 
+    # List of aliens inside the game
     global aliens
     aliens = []
 
     for _ in range(10):
         get_new_alien()
 
+    # List of bullets inside the game
     global bullets
     bullets = []
 
@@ -34,23 +37,25 @@ def main():
     while on:
         for alien in aliens:
             for bullet in bullets:
-                if alien.distance(bullet) <= 25:
+                if alien.distance(bullet) <= 20:
                     aliens.remove(alien)
+                    bullets.remove(bullet)
+                if bullet != None:
+                    if bullet.ycor() < 410:
+                        bullet.move()
+                    else:
+                        bullets.remove(bullet)
+
             if alien.ycor() < 410:
                 alien.move()
-
-        for bullet in bullets:
-            if bullet.ycor() < 410:
-                bullet.move()
-            else:
-                bullets.remove(bullet)
 
     screen.exitonclick()
 
 
 def shoot():
-    bullet = Bullet(position=(ship.xcor(), ship.ycor()))
-    bullets.append(bullet)
+    new_bullet = Bullet(position=(ship.xcor(), ship.ycor()))
+    if len(bullets) == 0:
+        bullets.append(new_bullet)
 
 
 def get_new_alien():
