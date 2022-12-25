@@ -3,8 +3,8 @@ from turtle import Turtle
 
 class Bullet(Turtle):
 
-    def __init__(self, position):
-        super(Bullet, self).__init__(shape="square")
+    def __init__(self, shape, position):
+        super(Bullet, self).__init__(shape=shape)
         self.name = "bullet"
         self.got_hit = False
         self.hideturtle()
@@ -13,9 +13,14 @@ class Bullet(Turtle):
         self.penup()
         self.goto(position)
 
-    def move(self):
+    def move_up(self):
         self.showturtle()
         new_y = self.ycor() + 5
+        self.goto(self.xcor(), new_y)
+
+    def move_down(self):
+        self.showturtle()
+        new_y = self.ycor() - 5
         self.goto(self.xcor(), new_y)
 
     def hide(self):
