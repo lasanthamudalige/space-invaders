@@ -37,7 +37,7 @@ def main():
     while on:
         for alien in aliens:
             for bullet in bullets:
-                if alien.distance(bullet) <= 20:
+                if alien.distance(bullet) <= 25:
                     alien.hide()
                     aliens.remove(alien)
                     bullet.hide()
