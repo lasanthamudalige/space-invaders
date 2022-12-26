@@ -113,9 +113,12 @@ def generate_aliens():
 
 
 def update_score(score):
+    # Life the pen up to not write while moving.
     score_turtle.penup()
     score_turtle.goto([-380, 370])
+    # Put the pen down to write.
     score_turtle.pendown()
+    # Hide the turtle to now show it while updating the score.
     score_turtle.hideturtle()
     score_turtle.pencolor("red")
     score_turtle.write(f"score: {score}",
