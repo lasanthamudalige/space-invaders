@@ -15,14 +15,17 @@ class Bullet(Turtle):
 
     def move_up(self):
         self.showturtle()
+        # Add 5 from the current y position from the bullet.
         new_y = self.ycor() + 5
         self.goto(self.xcor(), new_y)
 
     def move_down(self):
         self.showturtle()
+        # Reduce 5 from the current y position from the bullet.
         new_y = self.ycor() - 5
         self.goto(self.xcor(), new_y)
 
+    # Hide the bullet from the screen
     def hide(self):
         self.hidden = True
         self.hideturtle()
