@@ -24,6 +24,7 @@ class Ship(Turtle):
         if new_x <= 400:
             self.goto(new_x, self.ycor())
 
+    # Get a new bullet from the ship's position.
     def get_new_bullet(self):
         new_bullet = Bullet(
             shape="square", position=(self.xcor(), self.ycor()))
