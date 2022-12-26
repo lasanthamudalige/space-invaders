@@ -6,7 +6,7 @@ class Bullet(Turtle):
     def __init__(self, shape, position):
         super(Bullet, self).__init__(shape=shape)
         self.name = "bullet"
-        self.got_hit = False
+        self.hidden = False
         self.hideturtle()
         self.color("blue")
         self.shapesize(1, 0.25)
@@ -24,5 +24,5 @@ class Bullet(Turtle):
         self.goto(self.xcor(), new_y)
 
     def hide(self):
-        self.got_hit = True
+        self.hidden = True
         self.hideturtle()
