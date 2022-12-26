@@ -14,9 +14,9 @@ class Alien(Turtle):
         self.shapesize(1, 1)
         self.penup()
         self.goto(position)
+        self.showturtle()
 
     def move_down(self):
-        self.showturtle()
         new_y = self.ycor() - 40
         if new_y <= 410:
             self.goto(self.xcor(), new_y)
@@ -32,7 +32,7 @@ class Alien(Turtle):
             self.goto(new_x, self.ycor())
 
     def hide(self):
-        self.got_hit = True
+        # self.got_hit = True
         self.hideturtle()
 
     def get_new_bullet(self):
