@@ -6,10 +6,9 @@ class Alien(Turtle):
 
     def __init__(self, position):
         super(Alien, self).__init__(shape="square")
-        self.name = "alien"
         self.direction = "left"
         self.hideturtle()
-        self.color("white")
+        self.color("green")
         self.shapesize(1, 1)
         self.penup()
         self.goto(position)

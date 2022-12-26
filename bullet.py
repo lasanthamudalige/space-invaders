@@ -5,7 +5,6 @@ class Bullet(Turtle):
 
     def __init__(self, shape, position):
         super(Bullet, self).__init__(shape=shape)
-        self.name = "bullet"
         self.hidden = False
         self.hideturtle()
         self.color("blue")
