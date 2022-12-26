@@ -14,11 +14,13 @@ class Ship(Turtle):
 
     def go_left(self):
         new_x = self.xcor() - 40
+        # If ship is not close to left edge
         if new_x >= -400:
             self.goto(new_x, self.ycor())
 
     def go_right(self):
         new_x = self.xcor() + 40
+        # If ship is not close to right edge
         if new_x <= 400:
             self.goto(new_x, self.ycor())
 
