@@ -1,4 +1,5 @@
 from turtle import Turtle
+from bullet import Bullet
 
 
 class Ship(Turtle):
@@ -20,3 +21,8 @@ class Ship(Turtle):
         new_x = self.xcor() + 40
         if new_x <= 400:
             self.goto(new_x, self.ycor())
+
+    def get_new_bullet(self):
+        new_bullet = Bullet(
+            shape="square", position=(self.xcor(), self.ycor()))
+        return new_bullet
