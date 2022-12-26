@@ -119,17 +119,17 @@ def update_score(score):
     score_turtle.hideturtle()
     score_turtle.pencolor("red")
     score_turtle.write(f"score: {score}",
-                       font=("Arial", 12, "normal"))
+                       font=("Silkscreen", 14))
 
 
 def update_lives(lives):
     lives_turtle.penup()
-    lives_turtle.goto([320, 370])
+    lives_turtle.goto([300, 370])
     lives_turtle.pendown()
     lives_turtle.hideturtle()
     lives_turtle.pencolor("red")
     lives_turtle.write(f"Lives ✕ {lives}",
-                       font=("Verdana", 12, "normal"))
+                       font=("Silkscreen", 14))
     lives_turtle.penup()
 
 
