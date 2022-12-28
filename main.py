@@ -1,6 +1,7 @@
 from turtle import Screen, Turtle
 from ship import Ship
 from alien import Alien
+from barrier import Barrier
 
 
 def main():
@@ -8,11 +9,21 @@ def main():
     screen.bgcolor("black")
     screen.setup(850, 800)
     screen.title("Space Invaders")
+
+    # Add custom shapes for aliens and the ship.
+    global alien_shape, ship_shape
+
+    alien_shape = "alien.gif"
+    screen.addshape(alien_shape)
+
+    ship_shape = "ship.gif"
+    screen.addshape(ship_shape)
+
     # Increase the speed and add aliens to the screen.
     screen.tracer(2)
 
     global ship
-    ship = Ship(position=(0, -350))
+    ship = Ship(ship_shape, position=(0, -350))
 
     # List of aliens inside the game.
     global aliens
@@ -21,18 +32,21 @@ def main():
     generate_aliens()
 
     # Decrease the speed back to normal.
-    screen.tracer(2)
+    screen.tracer(1)
 
     # List of bullets inside the game.
-    global bullets
-    bullets = []
+    global ship_bullets, alien_bullets
+    ship_bullets = []
+    alien_bullets = []
 
     screen.listen()
     screen.onkey(ship.go_left, "a")
     screen.onkey(ship.go_right, "d")
     screen.onkey(ship.go_left, "Left")
     screen.onkey(ship.go_right, "Right")
-    screen.onkey(shoot, "space")
+    screen.onkey(shoot_alien, "space")
+
+    # barrier = Barrier(position=(50, -350))
 
     on = True
     lives = 3
@@ -44,24 +58,28 @@ def main():
     lives_turtle = Turtle()
 
     while on:
+        # Add score and lives on the top of the screen and update it when it change.
+        update_score(score)
+        update_lives(lives)
+
         # If there are aliens in the list.
         if len(aliens) > 0:
             for alien in aliens:
                 # If there are bullets in the list.
-                if len(bullets) > 0:
-                    for bullet in bullets:
+                if len(ship_bullets) > 0:
+                    for bullet in ship_bullets:
                         if alien.distance(bullet) <= 30:
                             alien.hide()
                             aliens.remove(alien)
                             bullet.hide()
-                            bullets.remove(bullet)
+                            ship_bullets.remove(bullet)
                             score += 10
                             score_turtle.reset()
                         if not bullet.hidden:
                             if bullet.ycor() < 410:
                                 bullet.move_up()
                             else:
-                                bullets.remove(bullet)
+                                ship_bullets.remove(bullet)
 
                 if alien.direction == "left":
                     if alien.xcor() > -380:
@@ -81,31 +99,35 @@ def main():
                             if alien.ycor() > -300:
                                 alien.move_down()
 
+                # screen.ontimer()
+
                 if lives == 0:
                     return
-
-            update_score(score)
-            update_lives(lives)
 
     screen.exitonclick()
 
 
-def shoot():
+# This will add a bullet to bullets list.
+def shoot_alien():
     # Get a new bullet from ship object.
     new_bullet = ship.get_new_bullet()
-    if len(bullets) == 0:
-        bullets.append(new_bullet)
+    if len(ship_bullets) == 0:
+        ship_bullets.append(new_bullet)
+
+
+def shoot_the_ship():
+    pass
 
 
 def generate_aliens():
     # Generate aliens for the first time.
     x = -230
-    y = 350
+    y = 300
     # Create 3 rows of aliens with 10 in one line.
     for _ in range(3):
         for _ in range(10):
             new_position = (x, y)
-            alien = Alien(new_position)
+            alien = Alien(alien_shape, new_position)
             aliens.append(alien)
             x += 50
         x = -230
