@@ -4,8 +4,8 @@ from bullet import Bullet
 
 class Alien(Turtle):
 
-    def __init__(self, position):
-        super(Alien, self).__init__(shape="square")
+    def __init__(self, shape,  position):
+        super(Alien, self).__init__(shape=shape)
         self.direction = "left"
         self.hideturtle()
         self.color("green")
