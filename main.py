@@ -236,9 +236,8 @@ def update_lives(lives):
                        font=("Silkscreen", 14))
     lives_turtle.penup()
 
+
 # This to show end message and score.
-
-
 def end_game(score):
     screen.clear()
     screen.bgcolor("black")
