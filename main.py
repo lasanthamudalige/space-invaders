@@ -63,11 +63,12 @@ def main():
     start_to_shoot = False
 
     # Create turtles to update score and lives in the screen.
-    global score_turtle, lives_turtle, end_turtle
+    global score_turtle, lives_turtle
     score_turtle = Turtle()
     lives_turtle = Turtle()
 
     # Turtle to show end message and score in the game
+    global end_turtle
     end_turtle = Turtle()
 
     while on:
@@ -81,6 +82,7 @@ def main():
                 # If there are bullets in the list.
                 if len(ship_bullets) > 0:
                     for bullet in ship_bullets:
+                        # If bullet distance from the alien is less than 20.
                         if alien.distance(bullet) <= 20:
                             alien.hide()
                             aliens.remove(alien)
@@ -89,27 +91,34 @@ def main():
                             score += 10
                             score_turtle.reset()
                         elif not bullet.hidden:
+                            # If bullet is outside of the screen.
                             if bullet.ycor() < 410:
                                 bullet.move_up()
                             else:
                                 ship_bullets.remove(bullet)
                         for barrier in barriers:
+                            # If bullet distance from the barrier is less than 50 and barrier health is greater than 0.
                             if barrier.distance(bullet) <= 50 and barrier.health > 0:
                                 bullet.hide()
                                 ship_bullets.remove(bullet)
                                 barrier.health -= 20
+                            # If barrier health is less than or equal to 0.
                             elif barrier.health <= 0:
                                 barriers.remove(barrier)
                                 barrier.hide()
 
                 if alien.direction == "left":
+                    # If alien direction is left and x coordination is greater than -380.
                     if alien.xcor() > -380:
                         alien.move_left()
+                    # else change alien direction property to right.
                     else:
                         for alien in reversed(aliens):
                             alien.direction = "right"
+                            # Move down all aliens if the current alien is close to the screen edge and break out of all for loops.
                             if alien.ycor() > -300:
                                 alien.move_down()
+                        break
                 if alien.direction == "right":
                     if alien.xcor() < 380:
                         alien.move_right()
@@ -118,13 +127,17 @@ def main():
                             alien.direction = "left"
                             if alien.ycor() > -300:
                                 alien.move_down()
+                        break
 
+                # This function will start aliens to shoot downwards for the first time.
                 if not start_to_shoot:
                     shoot_the_ship()
                     start_to_shoot = True
 
                 for bullet in alien_bullets:
+                    # If bullet is still in the screen.
                     if bullet.ycor() > -410:
+                        # If the bullet hit the ship.
                         if bullet.distance(ship) <= 15:
                             bullet.hide()
                             alien_bullets.remove(bullet)
@@ -144,21 +157,10 @@ def main():
                             barriers.remove(barrier)
                             barrier.hide()
 
+                # If all lives are over end the game after showing the score.
                 if lives == 0:
                     on = False
-                    screen.clear()
-                    screen.bgcolor("black")
-                    end_turtle.hideturtle()
-                    end_turtle.penup()
-                    end_turtle.goto((-130, 200))
-                    end_turtle.pendown()
-                    end_turtle.pencolor("red")
-                    end_turtle.write("Game Over!", font=("Silkscreen", 30))
-                    end_turtle.penup()
-                    end_turtle.goto((-140, 100))
-                    end_turtle.pendown()
-                    end_turtle.write(
-                        f"Your score: {score}", font=("Silkscreen", 25))
+                    end_game(score)
 
     screen.exitonclick()
 
@@ -229,6 +231,22 @@ def update_lives(lives):
     lives_turtle.write(f"Lives ✕ {lives}",
                        font=("Silkscreen", 14))
     lives_turtle.penup()
+
+
+def end_game(score):
+    screen.clear()
+    screen.bgcolor("black")
+    end_turtle.hideturtle()
+    end_turtle.penup()
+    end_turtle.goto((-130, 200))
+    end_turtle.pendown()
+    end_turtle.pencolor("red")
+    end_turtle.write("Game Over!", font=("Silkscreen", 30))
+    end_turtle.penup()
+    end_turtle.goto((-140, 100))
+    end_turtle.pendown()
+    end_turtle.write(
+        f"Your score: {score}", font=("Silkscreen", 25))
 
 
 if __name__ == "__main__":
