@@ -3,6 +3,8 @@ from ship import Ship
 from alien import Alien
 from barrier import Barrier
 import random
+from time import sleep
+import sys
 
 
 def main():
@@ -57,7 +59,7 @@ def main():
     screen.onkey(shoot_alien, "space")
 
     on = True
-    lives = 1
+    lives = 3
     score = 0
     # This will start shooting for.
     start_to_shoot = False
@@ -161,6 +163,8 @@ def main():
                 if lives == 0:
                     on = False
                     end_game(score)
+                    sleep(5)
+                    sys.exit(0)
 
     screen.exitonclick()
 
