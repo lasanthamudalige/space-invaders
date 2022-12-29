@@ -8,8 +8,6 @@ class Alien(Turtle):
         super(Alien, self).__init__(shape=shape)
         self.direction = "left"
         self.hideturtle()
-        # self.color("green")
-        # self.shapesize(1, 1)
         self.penup()
         self.goto(position)
         self.showturtle()

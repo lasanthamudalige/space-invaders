@@ -6,8 +6,6 @@ class Ship(Turtle):
 
     def __init__(self, shape , position):
         super(Ship, self).__init__(shape=shape)
-        # self.color("blue")
-        # self.shapesize(stretch_wid=3, stretch_len=3)
         self.penup()
         self.goto(position)
 
