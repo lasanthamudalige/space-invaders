@@ -15,15 +15,15 @@ def main():
 
     # Add custom shapes for aliens, ship and barriers.
     global alien_shape
-    alien_shape = "alien.gif"
+    alien_shape = "icons/alien.gif"
     screen.addshape(alien_shape)
 
     global ship_shape
-    ship_shape = "ship.gif"
+    ship_shape = "icons/ship.gif"
     screen.addshape(ship_shape)
 
     global barrier_shape
-    barrier_shape = "barrier.gif"
+    barrier_shape = "icons/barrier.gif"
     screen.addshape(barrier_shape)
 
     # Increase the speed and add aliens to the screen.
@@ -63,9 +63,12 @@ def main():
     start_to_shoot = False
 
     # Create turtles to update score and lives in the screen.
-    global score_turtle, lives_turtle
+    global score_turtle, lives_turtle, end_turtle
     score_turtle = Turtle()
     lives_turtle = Turtle()
+
+    # Turtle to show end message and score in the game
+    end_turtle = Turtle()
 
     while on:
         # Add score and lives on the top of the screen and update it when it change.
@@ -142,10 +145,15 @@ def main():
                             barrier.hide()
 
                 if lives == 0:
+                    on = False
                     screen.clear()
                     screen.bgcolor("black")
-                    return
-                    
+                    end_turtle.hideturtle()
+                    end_turtle.penup()
+                    end_turtle.goto((-130, 200))
+                    end_turtle.pendown()
+                    end_turtle.pencolor("red")
+                    end_turtle.write("Game Over!", font=("Silkscreen", 30))
 
     screen.exitonclick()
 
