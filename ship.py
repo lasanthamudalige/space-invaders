@@ -4,20 +4,27 @@ from bullet import Bullet
 
 class Ship(Turtle):
 
-    def __init__(self, shape , position):
+    def __init__(self, shape, position):
         super(Ship, self).__init__(shape=shape)
+        self.position = position
         self.penup()
         self.goto(position)
 
+    # Go back to started position.
+    def reset(self):
+        self.hideturtle()
+        self.goto(self.position)
+        self.showturtle()
+
     def go_left(self):
         new_x = self.xcor() - 40
-        # If ship is not close to left edge
+        # If ship is not close to left edge.
         if new_x >= -400:
             self.goto(new_x, self.ycor())
 
     def go_right(self):
         new_x = self.xcor() + 40
-        # If ship is not close to right edge
+        # If ship is not close to right edge.
         if new_x <= 400:
             self.goto(new_x, self.ycor())
 
