@@ -31,5 +31,5 @@ class Ship(Turtle):
     # Get a new bullet from the ship's position.
     def get_new_bullet(self):
         new_bullet = Bullet(
-            shape="square", position=(self.xcor(), self.ycor()))
+            shape="square", color="blue" , position=(self.xcor(), self.ycor()))
         return new_bullet

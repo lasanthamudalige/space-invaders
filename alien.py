@@ -33,5 +33,5 @@ class Alien(Turtle):
     # Get a new bullet from the alien's position.
     def get_new_bullet(self):
         new_bullet = Bullet(
-            shape="circle", position=(self.xcor(), self.ycor()))
+            shape="circle", color="green" , position=(self.xcor(), self.ycor()))
         return new_bullet
