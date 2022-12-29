@@ -2,33 +2,38 @@ from turtle import Screen, Turtle
 from ship import Ship
 from alien import Alien
 from barrier import Barrier
+import random
 
 
 def main():
+    # Declare global variables to access across from other functions.
+    global screen
     screen = Screen()
     screen.bgcolor("black")
     screen.setup(850, 800)
     screen.title("Space Invaders")
 
-    # Declare global variables to access across from other functions.
-    global alien_shape, ship_shape, barrier_shape, ship, aliens, ship_bullets, alien_bullets, barriers
-
     # Add custom shapes for aliens, ship and barriers.
+    global alien_shape
     alien_shape = "alien.gif"
     screen.addshape(alien_shape)
 
+    global ship_shape
     ship_shape = "ship.gif"
     screen.addshape(ship_shape)
 
+    global barrier_shape
     barrier_shape = "barrier.gif"
     screen.addshape(barrier_shape)
 
     # Increase the speed and add aliens to the screen.
     screen.tracer(2)
 
+    global ship
     ship = Ship(ship_shape, position=(0, -350))
 
     # List of aliens and barriers inside the game.
+    global aliens, barriers
     aliens = []
     barriers = []
 
@@ -39,6 +44,7 @@ def main():
     screen.tracer(1)
 
     # List of bullets inside the game.
+    global ship_bullets, alien_bullets
     ship_bullets = []
     alien_bullets = []
 
@@ -52,6 +58,8 @@ def main():
     on = True
     lives = 3
     score = 0
+    # This will start shooting for.
+    start_to_shoot = False
 
     # Create turtles to update score and lives in the screen.
     global score_turtle, lives_turtle
@@ -69,14 +77,14 @@ def main():
                 # If there are bullets in the list.
                 if len(ship_bullets) > 0:
                     for bullet in ship_bullets:
-                        if alien.distance(bullet) <= 30:
+                        if alien.distance(bullet) <= 20:
                             alien.hide()
                             aliens.remove(alien)
                             bullet.hide()
                             ship_bullets.remove(bullet)
                             score += 10
                             score_turtle.reset()
-                        if not bullet.hidden:
+                        elif not bullet.hidden:
                             if bullet.ycor() < 410:
                                 bullet.move_up()
                             else:
@@ -90,7 +98,6 @@ def main():
                             alien.direction = "right"
                             if alien.ycor() > -300:
                                 alien.move_down()
-
                 if alien.direction == "right":
                     if alien.xcor() < 380:
                         alien.move_right()
@@ -100,7 +107,21 @@ def main():
                             if alien.ycor() > -300:
                                 alien.move_down()
 
-                # screen.ontimer()
+                if not start_to_shoot:
+                    shoot_the_ship()
+                    start_to_shoot = True
+
+                for bullet in alien_bullets:
+                    if bullet.ycor() > -410:
+                        if bullet.distance(ship) <= 15:
+                            bullet.hide()
+                            alien_bullets.remove(bullet)
+                            lives -= 1
+                            ship.reset()
+                        else:
+                            bullet.move_down()
+                    else:
+                        alien_bullets.remove(bullet)
 
                 if lives == 0:
                     return
@@ -117,7 +138,10 @@ def shoot_alien():
 
 
 def shoot_the_ship():
-    pass
+    random_alien = random.choice(aliens)
+    new_bullet = random_alien.get_new_bullet()
+    alien_bullets.append(new_bullet)
+    screen.ontimer(shoot_the_ship, 5000)
 
 
 def generate_aliens():
@@ -153,6 +177,8 @@ def update_score(score):
     # Hide the turtle to now show it while updating the score.
     score_turtle.hideturtle()
     score_turtle.pencolor("red")
+    # Clear the previous drawing before writing.
+    score_turtle.clear()
     score_turtle.write(f"score: {score}",
                        font=("Silkscreen", 14))
 
@@ -163,6 +189,7 @@ def update_lives(lives):
     lives_turtle.pendown()
     lives_turtle.hideturtle()
     lives_turtle.pencolor("red")
+    lives_turtle.clear()
     lives_turtle.write(f"Lives ✕ {lives}",
                        font=("Silkscreen", 14))
     lives_turtle.penup()
