@@ -3,11 +3,11 @@ from turtle import Turtle
 
 class Bullet(Turtle):
 
-    def __init__(self, shape, position):
+    def __init__(self, shape, color , position):
         super(Bullet, self).__init__(shape=shape)
         self.hidden = False
         self.hideturtle()
-        self.color("blue")
+        self.color(color)
         self.shapesize(0.75, 0.10)
         self.penup()
         self.goto(position)
