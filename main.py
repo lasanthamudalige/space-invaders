@@ -10,32 +10,35 @@ def main():
     screen.setup(850, 800)
     screen.title("Space Invaders")
 
-    # Add custom shapes for aliens and the ship.
-    global alien_shape, ship_shape
+    # Declare global variables to access across from other functions.
+    global alien_shape, ship_shape, barrier_shape, ship, aliens, ship_bullets, alien_bullets, barriers
 
+    # Add custom shapes for aliens, ship and barriers.
     alien_shape = "alien.gif"
     screen.addshape(alien_shape)
 
     ship_shape = "ship.gif"
     screen.addshape(ship_shape)
 
+    barrier_shape = "barrier.gif"
+    screen.addshape(barrier_shape)
+
     # Increase the speed and add aliens to the screen.
     screen.tracer(2)
 
-    global ship
     ship = Ship(ship_shape, position=(0, -350))
 
-    # List of aliens inside the game.
-    global aliens
+    # List of aliens and barriers inside the game.
     aliens = []
+    barriers = []
 
     generate_aliens()
+    generate_barriers()
 
     # Decrease the speed back to normal.
     screen.tracer(1)
 
     # List of bullets inside the game.
-    global ship_bullets, alien_bullets
     ship_bullets = []
     alien_bullets = []
 
@@ -45,8 +48,6 @@ def main():
     screen.onkey(ship.go_left, "Left")
     screen.onkey(ship.go_right, "Right")
     screen.onkey(shoot_alien, "space")
-
-    # barrier = Barrier(position=(50, -350))
 
     on = True
     lives = 3
@@ -132,6 +133,15 @@ def generate_aliens():
             x += 50
         x = -230
         y -= 50
+
+
+def generate_barriers():
+    x = -300
+    y = -250
+    for _ in range(4):
+        new_barrier = Barrier(barrier_shape, position=(x, y))
+        barriers.append(new_barrier)
+        x += 200
 
 
 def update_score(score):
