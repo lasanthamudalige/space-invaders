@@ -48,6 +48,7 @@ def main():
     ship_bullets = []
     alien_bullets = []
 
+    # Move the ship left and right by listening to key presses.
     screen.listen()
     screen.onkey(ship.go_left, "a")
     screen.onkey(ship.go_right, "d")
@@ -56,7 +57,7 @@ def main():
     screen.onkey(shoot_alien, "space")
 
     on = True
-    lives = 3
+    lives = 1
     score = 0
     # This will start shooting for.
     start_to_shoot = False
@@ -89,6 +90,14 @@ def main():
                                 bullet.move_up()
                             else:
                                 ship_bullets.remove(bullet)
+                        for barrier in barriers:
+                            if barrier.distance(bullet) <= 50 and barrier.health > 0:
+                                bullet.hide()
+                                ship_bullets.remove(bullet)
+                                barrier.health -= 20
+                            elif barrier.health <= 0:
+                                barriers.remove(barrier)
+                                barrier.hide()
 
                 if alien.direction == "left":
                     if alien.xcor() > -380:
@@ -123,8 +132,20 @@ def main():
                     else:
                         alien_bullets.remove(bullet)
 
+                    for barrier in barriers:
+                        if barrier.distance(bullet) <= 48 and barrier.health > 0:
+                            bullet.hide()
+                            alien_bullets.remove(bullet)
+                            barrier.health -= 20
+                        elif barrier.health <= 0:
+                            barriers.remove(barrier)
+                            barrier.hide()
+
                 if lives == 0:
+                    screen.clear()
+                    screen.bgcolor("black")
                     return
+                    
 
     screen.exitonclick()
 
@@ -138,6 +159,7 @@ def shoot_alien():
 
 
 def shoot_the_ship():
+    # Select a random alien to shoot.
     random_alien = random.choice(aliens)
     new_bullet = random_alien.get_new_bullet()
     alien_bullets.append(new_bullet)
@@ -162,6 +184,7 @@ def generate_aliens():
 def generate_barriers():
     x = -300
     y = -250
+    # Create 4 barriers on the screen.
     for _ in range(4):
         new_barrier = Barrier(barrier_shape, position=(x, y))
         barriers.append(new_barrier)
