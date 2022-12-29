@@ -154,6 +154,11 @@ def main():
                     end_turtle.pendown()
                     end_turtle.pencolor("red")
                     end_turtle.write("Game Over!", font=("Silkscreen", 30))
+                    end_turtle.penup()
+                    end_turtle.goto((-140, 100))
+                    end_turtle.pendown()
+                    end_turtle.write(
+                        f"Your score: {score}", font=("Silkscreen", 25))
 
     screen.exitonclick()
 
